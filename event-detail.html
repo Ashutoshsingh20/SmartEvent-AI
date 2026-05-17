@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Event Detail | SmartEvent AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body data-page="detail">
+    <header class="site-header compact">
+      <a class="brand" href="index.html"><span>SmartEvent</span> AI</a>
+      <button class="nav-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="events.html">Events</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a class="auth-link" href="login.html">Login</a>
+        <button class="icon-button theme-toggle" aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+      </nav>
+    </header>
+    <main id="event-detail" class="detail-page">
+      <section class="detail-hero skeleton-block" aria-hidden="true"></section>
+      <section class="detail-content">
+        <article class="detail-main"><div class="skeleton-pill"></div><div class="skeleton-line long" style="height:48px;margin:18px 0"></div><div class="skeleton-line medium"></div><div class="skeleton-block" style="margin-top:32px"></div></article>
+        <aside class="action-panel"><div class="skeleton-line medium"></div><div class="skeleton-line long"></div><div class="skeleton-block"></div></aside>
+      </section>
+    </main>
+    <div id="modal-root"></div>
+    <div id="toast-root" class="toast-root"></div>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script type="module" src="js/firebase.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/registration.js"></script>
+    <script src="js/events.js"></script>
+  </body>
+</html>

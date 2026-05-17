@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | SmartEvent AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body data-page="login">
+    <main class="auth-page">
+      <section class="auth-art">
+        <a class="brand" href="index.html"><span>SmartEvent</span> AI</a>
+        <h1>One identity for every campus event.</h1>
+        <p>Create a Firebase Auth account or sign in with an existing campus profile. Student and organizer registration is self-service; admin promotion happens in Firestore.</p>
+        <div class="demo-accounts">
+          <button data-demo="student">Student demo</button>
+          <button data-demo="organizer">Organizer demo</button>
+          <button data-demo="admin">Admin demo</button>
+        </div>
+      </section>
+      <section class="auth-panel">
+        <div class="form-toggle">
+          <button class="active" data-auth-tab="signin">Sign In</button>
+          <button data-auth-tab="signup">Sign Up</button>
+        </div>
+        <form id="signin-form" class="auth-form">
+          <label>Email<input type="email" name="email" required placeholder="student@college.edu"></label>
+          <label>Password<input type="password" name="password" required placeholder="••••••••"></label>
+          <div class="form-row"><label class="toggle-line"><input type="checkbox" checked> Remember me</label><a href="#" id="forgot-link">Forgot password?</a></div>
+          <button class="button primary full" type="submit">Sign In</button>
+          <button class="button ghost full" type="button" id="google-demo"><i class="fa-brands fa-google"></i> Continue with Google</button>
+        </form>
+        <form id="signup-form" class="auth-form hidden">
+          <label>Full name<input name="name" required minlength="2" placeholder="Priya Sharma"></label>
+          <label>Institutional email<input type="email" name="email" required placeholder="priya@college.edu"></label>
+          <label>Password<input type="password" name="password" required placeholder="Minimum 8 characters"></label>
+          <div class="strength-meter" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <label>Confirm password<input type="password" name="confirm" required></label>
+          <div class="role-picks">
+            <label><input type="radio" name="role" value="student" checked> Student</label>
+            <label><input type="radio" name="role" value="organizer"> Organizer</label>
+          </div>
+          <label class="toggle-line"><input type="checkbox" required> I agree to the Terms and Privacy policy</label>
+          <button class="button primary full" type="submit">Create Account</button>
+        </form>
+      </section>
+    </main>
+    <div id="toast-root" class="toast-root"></div>
+    <script type="module" src="js/firebase.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>

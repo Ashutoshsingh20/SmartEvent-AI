@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SmartEvent AI campus event management platform">
+    <title>SmartEvent AI | The Future of Campus Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body data-page="home">
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span>SmartEvent</span> AI</a>
+      <button class="nav-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="events.html">Events</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a class="auth-link" href="login.html">Login</a>
+        <button class="icon-button theme-toggle" aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero full-hero spotlight">
+        <div class="hero-inner">
+          <p class="eyebrow">FIREBASE-READY CAMPUS OPS</p>
+          <h1>The Future of Campus Events.</h1>
+          <p class="hero-copy">Discover events, register in seconds, carry verifiable QR tickets, and give organizers a live command center for every seat, scan, and signal.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="events.html">Explore Events</a>
+            <a class="button ghost" href="about.html">Learn More</a>
+          </div>
+        </div>
+        <a class="scroll-cue" href="#featured" aria-label="Scroll to featured events"><i class="fa-solid fa-chevron-down"></i></a>
+      </section>
+
+      <section id="featured" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">FEATURED</p>
+          <h2>High-signal events from campus</h2>
+          <a href="events.html">View all</a>
+        </div>
+        <div class="event-grid three" id="featured-events">
+          <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+          <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+          <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-heading">
+          <p class="eyebrow">TRENDING</p>
+          <h2>Momentum building now</h2>
+        </div>
+        <div class="horizontal-strip" id="trending-events">
+          <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+          <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+          <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">CATEGORIES</p>
+          <h2>Find your lane in one tap</h2>
+        </div>
+        <div class="category-grid" id="category-grid"></div>
+      </section>
+
+      <section class="stats-bar" aria-label="Platform statistics">
+        <div><strong data-count="48">0</strong><span>Total events</span></div>
+        <div><strong data-count="3100">0</strong><span>Registered students</span></div>
+        <div><strong data-count="6">0</strong><span>Categories</span></div>
+        <div><strong data-count="24">0</strong><span>Campus partners</span></div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">VOICES</p>
+          <h2>Built for students and organizers</h2>
+        </div>
+        <div class="testimonial-carousel" id="testimonials"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div><strong>SmartEvent AI</strong><p>Premium event operations for colleges and universities.</p></div>
+      <div><strong>Quick links</strong><a href="events.html">Events</a><a href="dashboard.html">Dashboard</a><a href="admin.html">Admin</a></div>
+      <div><strong>Contact</strong><p>studentaffairs@smartevent.edu</p><p>North Campus Innovation Block</p></div>
+    </footer>
+
+    <div id="toast-root" class="toast-root"></div>
+    <script type="module" src="js/firebase.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/events.js"></script>
+  </body>
+</html>

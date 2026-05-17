@@ -1,0 +1,29 @@
+# System and OS Files
+.DS_Store
+Thumbs.db
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# LaTeX build outputs
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.run.xml
+*.bcf
+
+# Local config
+.firebaserc

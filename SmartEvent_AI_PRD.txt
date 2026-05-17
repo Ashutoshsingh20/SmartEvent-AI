@@ -1,0 +1,1430 @@
+SmartEvent AI
+Product Requirements Document
+A Futuristic AI-Assisted College & University Event Management Platform
+Version
+1.0 (Initial Release)
+Status
+Draft → In Review
+Date
+May 17, 2026
+Author
+Product & Engineering Team
+Platform
+Web Application (HTML · CSS · Vanilla JS · Firebase)
+Audience
+Developers · Designers · QA · Stakeholders
+Confidentiality
+Internal Use Only
+SmartEvent AI is a premium monochrome-design, Firebase-powered event management platform
+purpose-built for colleges and universities. It enables students to discover and register for events
+seamlessly while giving organizers and admins a professional-grade analytics and operations suite.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 1 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+Table of Contents
+1. Executive Summary
+2. Product Vision & Goals
+2.1 Vision Statement
+2.2 Core Objectives
+2.3 Success Metrics
+3. Scope & Constraints
+3.1 In-Scope
+3.2 Out-of-Scope
+3.3 Technical Constraints
+4. User Personas & Roles
+4.1 Student
+4.2 Organizer
+4.3 Admin
+5. Information Architecture
+5.1 Page Map
+5.2 Navigation Flow
+6. Design System
+6.1 Color Tokens
+6.2 Typography
+6.3 Motion & Animations
+6.4 Component Library
+7. Feature Specifications
+7.1 Authentication System
+7.2 Event Discovery & Search
+7.3 Event Registration & Ticketing
+7.4 QR Code System
+7.5 AI-Inspired Features
+7.6 User Dashboard
+7.7 Admin Dashboard & Analytics
+8. Page-by-Page Requirements
+8.1 Home Page
+8.2 Events Listing Page
+8.3 Event Detail Page
+8.4 Login / Register Page
+8.5 User Dashboard
+8.6 My Tickets Page
+8.7 Profile Page
+8.8 Admin Dashboard
+8.9 Create / Edit Event Page
+8.10 Analytics Dashboard
+8.11 QR Scanner Page
+8.12 About & Contact Pages
+9. Firebase Architecture
+9.1 Firestore Schema
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 2 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+9.2 Security Rules
+9.3 Storage
+9.4 Hosting
+10. File & Code Structure
+11. Third-Party Libraries
+12. Non-Functional Requirements
+12.1 Performance
+12.2 Accessibility
+12.3 Security
+12.4 Responsiveness
+13. Acceptance Criteria & Testing
+14. Milestones & Delivery Plan
+15. Risks & Mitigations
+16. Appendix
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 3 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+1
+Executive Summary
+SmartEvent AI is a full-stack web application designed to modernise event management within colleges
+and universities. The platform targets three distinct user roles—students, organizers, and
+administrators—and provides each with purpose-built workflows backed by Firebase's serverless
+infrastructure.
+The product is intentionally scoped to pure web technologies (HTML, CSS, Vanilla JavaScript) without any
+frontend framework dependencies, keeping the barrier to entry low for academic environments while still
+delivering a premium, startup-quality user experience. The monochrome design language draws
+inspiration from Apple, Linear, Vercel, and Notion—emphasizing clarity, whitespace, and cinematic
+typography over decorative excess.
+Key differentiators include a simulated AI recommendation engine, live seat availability counters,
+QR-based attendance verification, and a real-time analytics dashboard that rivals commercial event
+platforms.
+ 13+
+ 3
+ 6
+ Application Pages
+ User Roles
+ Event Categories
+ 5
+ 100%
+ PWA-Ready
+ Firestore Collections
+ Serverless Backend
+ Mobile Support
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 4 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+2
+Product Vision & Goals
+2.1 Vision Statement
+"To become the gold-standard event management platform for higher education institutions—where
+students discover and attend events effortlessly, and organizers operate with the power of
+enterprise-grade tooling at zero infrastructure cost."
+2.2 Core Objectives
+Student Experience
+   Reduce event discovery friction to under 30 seconds from login.
+   Deliver a personalized recommendation feed using behavioural signals.
+   Enable one-tap registration with immediate QR ticket generation.
+   Provide a self-service attendance history and ticket archive.
+Organizer Efficiency
+   Allow non-technical organizers to create, publish, and manage events without IT support.
+   Provide real-time seat availability and registration dashboards.
+   Enable QR-based attendance scanning directly from a mobile browser.
+   Support CSV export of attendee lists for offline reporting.
+Admin Control
+   Grant super-admin access to all events, users, and system analytics.
+   Surface monochrome Chart.js dashboards for category and trend analysis.
+   Enable user role management (student → organizer promotion).
+   Maintain audit trails for all event mutations.
+Technical Excellence
+   Ship a 100% serverless application with no backend runtime costs.
+   Achieve Lighthouse score ≥ 85 across Performance, Accessibility, and SEO.
+   Support real-time updates via Firestore listeners with no polling.
+   Deliver a responsive UI that works on 320 px—1920 px viewports.
+2.3 Success Metrics
+KPI
+Target
+Measurement Method
+Student registration conversion
+≥ 70%
+Registrations / Event page views
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 5 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+Average ticket download rate
+≥ 85%
+Downloads / Registrations
+QR scan accuracy (false negatives)
+< 0.5%
+Invalid scans / Total scans
+Admin dashboard load time
+< 2 s
+Lighthouse / Chrome DevTools
+Mobile usability score
+≥ 90
+Google Mobile-Friendly Test
+Organizer onboarding time
+< 10 min
+Usability test sessions
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 6 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+3
+Scope & Constraints
+3.1 In-Scope
+   Multi-page static web app deployed to Firebase Hosting.
+   Firebase Authentication: email/password and Google OAuth.
+   Firestore real-time database for all CRUD operations.
+   Firebase Storage for event banner image uploads.
+   QR code generation (client-side) and camera-based scanning.
+   Client-side AI simulation (recommendations, trending, notifications).
+   Dark/Light theme toggle with localStorage persistence.
+   Chart.js analytics dashboards with monochrome styling.
+   SweetAlert2 modals, AOS scroll animations, Font Awesome icons.
+   Fully responsive layout (mobile, tablet, desktop).
+   Role-based access control enforced both client-side and via Firestore Rules.
+   CSV export of attendee lists from Admin panel.
+3.2 Out-of-Scope
+   Server-side rendering (React, Next.js, Angular, Vue).
+   Node.js / Python / PHP backend services.
+   Real AI or ML APIs (GPT, Gemini, etc.).
+   Payment gateway integration.
+   Native mobile apps (iOS / Android).
+   Email / SMS notification delivery infrastructure.
+   Multi-tenancy (multiple institutions on one deployment).
+   Calendar sync (Google Calendar, Outlook).
+3.3 Technical Constraints
+Language
+HTML5, CSS3, Vanilla JavaScript (ES2020+)
+Authentication
+Firebase Authentication only
+Database
+Firestore (NoSQL document store)
+File Storage
+Firebase Storage (images ≤ 5 MB each)
+Hosting
+Firebase Hosting (CDN-backed static hosting)
+Browser Support
+Chrome 100+, Firefox 100+, Safari 15+, Edge 100+
+Viewport Range
+320 px (mobile) to 1920 px (desktop)
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 7 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+Dependency Management
+CDN links (no npm build step required)
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 8 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+4
+User Personas & Roles
+4.1 Student — Priya Sharma
+19-year-old Computer Science sophomore. Tech-savvy, uses smartphone primarily. Wants to discover
+hackathons and workshops relevant to her interests without browsing scattered notice boards.
+Core Needs
+   Register for events with one tap.
+   Download verifiable QR tickets instantly.
+   Receive smart recommendations based on her interests.
+   Track her attendance history for her CV.
+   Get notified when favourite events are filling up.
+4.2 Organizer — Rahul Verma
+Final-year student heading the Tech Club. Organizes 4–6 events per semester. Needs a professional tool
+to replace manual spreadsheets and WhatsApp group coordination.
+Core Needs
+   Create events with rich metadata and banner images.
+   Monitor live seat availability and registrations.
+   Scan QR codes at venue entry without extra hardware.
+   Export attendee lists as CSV for college records.
+   Edit or cancel events with immediate propagation.
+4.3 Admin — Dr. Anjali Mehta
+Dean of Student Affairs. Oversees all college events. Requires a bird's-eye analytics view and the ability to
+manage organizer privileges.
+Core Needs
+   View institution-wide event and attendance analytics.
+   Promote student accounts to organizer role.
+   Delete inappropriate or duplicate events.
+   Access all registrations and ticket data.
+   Generate monthly participation trend reports.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 9 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+5
+Information Architecture
+5.1 Page Map
+Zone
+Page
+Access Level
+Route
+Public
+Home
+All visitors
+/index.html
+Public
+Events Listing
+All visitors
+/events.html
+Public
+Event Detail
+All visitors
+/event-detail.html?id=
+Public
+About
+All visitors
+/about.html
+Public
+Contact
+All visitors
+/contact.html
+Public
+Login / Register
+Unauthenticated
+/login.html
+Student
+User Dashboard
+Authenticated (student)
+/dashboard.html
+Student
+My Tickets
+Authenticated (student)
+/dashboard.html#tickets
+Student
+Profile
+Authenticated (student)
+/dashboard.html#profile
+Admin/Org
+Admin Dashboard
+organizer / admin
+/admin.html
+Admin/Org
+Create / Edit Event
+organizer / admin
+/admin.html#create
+Admin/Org
+Analytics Dashboard
+admin only
+/admin.html#analytics
+Admin/Org
+QR Scanner
+organizer / admin
+/admin.html#scanner
+5.2 Navigation Flow
+   Unauthenticated users land on Home → can browse Events and Event Detail → prompted to Login
+on registration attempt.
+   Post-login students are redirected to User Dashboard; first-time users see onboarding tooltip overlay.
+   Organizer/Admin role is detected on login; users are redirected to /admin.html.
+   Hash-based SPA routing within dashboard.html and admin.html avoids full page reloads.
+   Navbar reflects auth state: Login button → Avatar + Logout dropdown after authentication.
+   Role-mismatch redirects: student attempting /admin.html is redirected to /dashboard.html with a toast
+error.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 10 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+6
+Design System
+6.1 Color Tokens
+All colors are defined as CSS custom properties on :root and toggled via a [data-theme='light'] attribute on
+.
+Token
+Dark Value
+Light Value
+Usage
+--bg-primary
+#000000
+#FFFFFF
+Page background
+--bg-secondary
+#0A0A0A
+#F9F9F9
+Section backgrounds
+--surface
+#111111
+#F0F0F0
+Cards, modals, panels
+--surface-hover
+#1A1A1A
+#E8E8E8
+Hovered cards
+--border
+rgba(255,255,255,0.08)
+rgba(0,0,0,0.08)
+All borders
+--text-primary
+#FFFFFF
+#111111
+Headings, body copy
+--text-secondary
+#B3B3B3
+#555555
+Meta, captions
+--text-tertiary
+#666666
+#999999
+Placeholders
+--accent
+#FFFFFF
+#000000
+Buttons, highlights
+--accent-soft
+#1A1A1A
+#EFEFEF
+Soft button backgrounds
+6.2 Typography
+Font stack (loaded via Google Fonts):
+Role
+Font Family
+Weight(s)
+Size Range
+Display / Hero
+Inter, SF Pro Display
+700–900
+48–80 px
+Heading 1
+Inter
+700
+32–40 px
+Heading 2
+Inter
+600
+22–28 px
+Heading 3
+Manrope
+600
+16–20 px
+Body
+Inter
+400
+14–16 px
+Label / Caption
+Inter
+500
+11–13 px
+Code / Mono
+JetBrains Mono
+400
+12–14 px
+Button
+Manrope
+600
+13–15 px
+6.3 Motion & Animation Spec
+Element
+Transform
+Duration
+Easing
+Page transitions
+opacity 0→1, translateY +16px→0
+400 ms
+cubic-bezier(0.16,1,0.3,1)
+Card hover lift
+translateY -4px, box-shadow expand
+200 ms
+ease-out
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 11 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+Modal open
+scale 0.95→1, opacity 0→1
+300 ms
+cubic-bezier(0.16,1,0.3,1)
+Toast slide-in
+translateX +100%→0
+320 ms
+spring(1,90,20,0)
+Button ripple
+radial expand from click origin
+500 ms
+ease-out
+Scroll reveal
+opacity 0→1, translateY +20px→0
+600 ms
+ease (AOS)
+Theme switch
+background, color all properties
+350 ms
+ease
+Loader fade-out
+opacity 1→0, scale 1→1.02
+400 ms
+ease-in
+Counter tick
+numeric increment animation
+1200 ms
+ease-out
+Underline hover
+scaleX 0→1 pseudo-element
+250 ms
+ease
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 12 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+6.4 Component Library (Partial)
+Event Card
+   Black & white banner image (object-fit: cover, 16:9 ratio).
+   Category pill badge (1 px border, uppercase, monospaced font).
+   Title (600 weight, 2-line clamp), date/time, venue meta row.
+   Seat status indicator: green dot → full → red cross (monochrome icon fallback).
+   On hover: translateY(-4px), box-shadow rgba(0,0,0,0.3) 0 12px 40px.
+   On focus (keyboard): 2px white outline offset 2px.
+Primary Button
+   Background: var(--accent), Color: var(--bg-primary).
+   Border-radius: 8px, padding: 12px 24px.
+   Ripple effect on click (pseudo-element radial animation).
+   Disabled state: opacity 0.4, cursor not-allowed.
+Ghost Button
+   Background: transparent, Border: 1px solid var(--border).
+   Color: var(--text-primary).
+   On hover: background var(--surface-hover).
+Toast Notification
+   Position: bottom-right, z-index 9999.
+   Types: success (white), warning (white with italic label), error (white).
+   Auto-dismiss: 4 000 ms. Manual close × button.
+   Stack vertically with 8px gap when multiple toasts appear.
+Modal Dialog
+   Backdrop: rgba(0,0,0,0.7) with blur(4px).
+   Panel: var(--surface), border-radius 16px, border var(--border).
+   Close on backdrop click and Escape key.
+   Trap focus within modal while open (accessibility).
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 13 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+7
+Feature Specifications
+7.1 Authentication System
+Firebase Authentication handles all identity management. No passwords are stored by the
+application—Firebase manages credential hashing and token lifecycle.
+Sign-Up Flow
+   Form fields: Full Name, Institutional Email, Password, Confirm Password, Role selection (student /
+organizer).
+   Client-side validation: name (≥ 2 chars), email regex, password strength (≥ 8 chars, 1 uppercase, 1
+number, 1 symbol).
+   Password strength meter: 4-segment bar, color transitions white→silver→gray→black.
+   On submit: createUserWithEmailAndPassword → write user doc to Firestore users collection →
+redirect.
+   Error states: email-already-in-use, weak-password, network-request-failed—each displays specific
+toast.
+Sign-In Flow
+   Email/password: signInWithEmailAndPassword.
+   Google OAuth: signInWithPopup(GoogleAuthProvider) → upsert user doc in Firestore.
+   Role detection: read users/{uid}.role → route to /dashboard.html or /admin.html.
+   Remember me: Firebase persistence set to LOCAL by default (IndexedDB).
+   Forgot password: sendPasswordResetEmail with branded redirect URL.
+Session & Security
+   onAuthStateChanged listener initialises role-based UI on every page load.
+   Unauthenticated users attempting protected routes are redirected to /login.html with returnUrl query
+param.
+   JWT ID tokens are managed by Firebase SDK; no manual token storage.
+   Logout: signOut() → clear local state → redirect to /index.html.
+7.2 Event Discovery & Search
+   Full-text client-side search over event title, description, tags, and venue fields (in-memory after
+Firestore fetch).
+   Filter panel: Category (multi-select checkboxes), Date range (start / end pickers), Status (Upcoming /
+Live / Past), Seat availability toggle.
+   Sort options: Date Ascending, Date Descending, Popularity (registrationCount), Newest First.
+   Live search: debounced 300 ms after keystroke; results update without page reload.
+   URL-encoded filter state: sharing the URL reproduces the same filter view.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 14 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+   Empty state: illustrated monochrome placeholder with clear-filters CTA.
+   Pagination: 12 cards per page; infinite scroll on mobile.
+7.3 Event Registration & Ticketing
+   Check: user must be authenticated; seats > 0; registration deadline not passed; user not already
+registered.
+   Atomic Firestore transaction: decrement events/{id}.seatsAvailable, create registrations document,
+add to user's registeredEvents array.
+   Post-registration: animated success modal with confetti (monochrome particle burst), ticket preview,
+and download CTA.
+   Ticket data structure: {ticketId, userId, eventId, userName, eventTitle, date, venue, qrPayload,
+generatedAt, status}.
+   QR payload: JSON string of {ticketId, userId, eventId} encoded via qrcode.js library, rendered as
+300×300 px canvas.
+   Download: ticket rendered to HTML canvas with event branding → exported as PNG via
+canvas.toDataURL().
+   Cancellation: allowed up to 24 hours before event; reverses Firestore transaction; ticket status set to
+'cancelled'.
+7.4 QR Code Attendance System
+   Organizer/Admin opens /admin.html#scanner → prompted for camera permission.
+   jsQR library decodes frames from getUserMedia video stream at 15 fps.
+   On decode: look up ticketId in Firestore registrations collection.
+   Ticket states: valid (not yet used) → mark attendance, show green SUCCESS overlay;
+already-scanned → show amber WARNING; invalid/not-found → show red ERROR.
+   Attendance write: create attendance/{ticketId} doc with {ticketId, userId, eventId, scannedAt,
+scannedBy}.
+   Offline fallback: manual ticketId text entry with Firestore lookup.
+   Audio cue: Web Audio API beep on successful scan (300 Hz, 150 ms).
+   Scan log: running list in sidebar showing last 20 scans with status badges.
+7.5 AI-Inspired Features (Client-Side Simulation)
+No external AI API is used. Intelligence is simulated via deterministic JavaScript scoring algorithms applied
+to local Firestore data.
+Smart Recommendation Engine
+   Score each event against user's interest tags (exact match = 10 pts, parent category = 5 pts).
+   Boost events with registrationCount > 50 by +3 pts (popularity signal).
+   Penalise events the user has already registered for (excluded).
+   Sort by descending score; surface top 6 as 'For You' card carousel.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 15 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+   Refresh on page load; 'Refresh Recommendations' button available.
+Trending Detection
+   Trending score = registrationCount × recencyMultiplier (events in next 7 days × 1.5).
+   Top 3 events by trending score receive 'Trending ■' badge (monochrome flame icon).
+   Trending is recalculated client-side every time the events list is fetched.
+Smart Notifications
+   'Seats filling fast' — shown when seatsAvailable / totalSeats < 0.2.
+   'Registration closes soon' — shown when deadline is within 48 hours.
+   'Live now' — shown when current time falls within event start ± 30 minutes.
+   'New event in your category' — triggered when a new event matches user's top interest tag (Firestore
+listener).
+   Notifications stored in Firestore notifications collection; unread count shown in navbar bell icon.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 16 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+7.6 User Dashboard
+Overview Panel
+   Welcome banner: 'Good morning, {name} ✦' with dynamic greeting by time of day.
+   Stat pills: Events Registered, Events Attended, Upcoming Events, Recommendations.
+Upcoming Events Widget
+   Horizontal scrollable card list of registered future events.
+   Countdown timer chip per card (e.g. '3 days 4 hrs').
+   Quick action: 'View Ticket' → opens ticket modal.
+My Tickets Archive
+   Grid of all tickets: upcoming (white border), attended (silver border), cancelled (strikethrough).
+   Filter by status; search by event name.
+   Download button per ticket.
+Recommendation Feed
+   6-card 'For You' grid using recommendation engine output.
+   Skeleton loaders while Firestore data fetches.
+Notification Centre
+   Bell icon badge with unread count.
+   Dropdown list of notifications with timestamp and mark-as-read action.
+   Firestore real-time listener; new notifications appear without refresh.
+Profile Section
+   Display Name, Email, Role badge, Member since date.
+   Edit: update displayName in Firebase Auth + Firestore.
+   Interest tags: multi-select chip input (used by recommendation engine).
+   Avatar: initials-based generated avatar (no photo upload required in v1).
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 17 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+7.7 Admin Dashboard & Analytics
+Sidebar Navigation
+   Fixed left sidebar (240 px) with icon + label nav items.
+   Items: Overview, Events, Create Event, Analytics, QR Scanner, Users, Settings.
+   Active item: white background pill, remaining items ghost.
+   Collapsible to icon-only (48 px) on smaller screens.
+Overview Panel
+   Stat cards (4-up grid): Total Events, Total Registrations, Attendance Rate, Active Users.
+   Real-time Firestore listeners update counters live.
+   Mini sparkline chart per card (last 7 days trend).
+Event Management Table
+   Sortable, filterable table: Title, Category, Date, Seats Left, Registrations, Status, Actions.
+   Inline status toggle (Upcoming → Live → Past).
+   Edit icon → opens Edit Event modal pre-populated with existing data.
+   Delete icon → SweetAlert2 confirmation modal → soft-delete (status: 'deleted') in Firestore.
+   Bulk actions: select multiple → bulk delete or export.
+Analytics Charts (Chart.js)
+Chart
+Type & Description
+Registrations Over Time
+Line chart, 30-day window, one data point per day.
+Registrations by Category
+Donut chart, 6 segments (one per category), monochrome grays.
+Top 5 Events by Popularity
+Horizontal bar chart, ranked by registrationCount.
+Attendance Rate by Event
+Grouped bar: Registered vs Attended per event (last 10 events).
+Monthly Participation Trend
+Area chart, 12-month rolling window.
+User Growth
+Line chart: cumulative new sign-ups per week.
+User Management
+   Searchable table: Name, Email, Role, Joined Date, Events Registered.
+   Role editor: dropdown (student / organizer / admin) → Firestore write + custom claim update.
+   Disable account action: sets users/{uid}.disabled = true; Firestore Rules deny disabled users write
+access.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 18 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+8
+Page-by-Page Requirements
+8.1 Home Page (/index.html)
+Hero Section
+   Full-viewport height, centered layout.
+   Animated particle canvas background (canvas API, 60 monochrome dots, mouse parallax).
+   Spotlight / radial-gradient that follows cursor position.
+   H1: massive weight 900, 64–80 px. E.g. 'The Future of Campus Events.'
+   Subtitle: 18 px, weight 400, secondary text color.
+   Two CTAs: 'Explore Events' (primary) + 'Learn More' (ghost).
+   Scroll-down chevron with bounce animation.
+Featured Events Section
+   3-card horizontal row (carousel on mobile).
+   Pulled from Firestore query: status = 'upcoming', orderBy registrationCount desc, limit 3.
+   Badge: 'FEATURED' monochrome pill.
+Trending Events Section
+   Horizontally scrollable 5-card strip.
+   Trending score algorithm applied client-side.
+   'Trending' badge with minimal flame icon.
+Categories Grid
+   6 category tiles in 3×2 grid (2×3 on mobile).
+   Each tile: category icon (Font Awesome), name, event count.
+   Click → navigates to /events.html?category=X.
+Statistics Bar
+   Animated count-up numbers (IntersectionObserver trigger).
+   Stats: Total Events, Registered Students, Categories, Partners.
+Testimonials
+   3-slide auto-advancing carousel (5 s interval).
+   Each slide: quote, name, role, college.
+   Monochrome avatar placeholder.
+Footer
+   3-column: Brand + tagline | Quick links | Contact info.
+   Social icon row (Font Awesome).
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 19 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+   Copyright line.
+8.2 Events Listing Page (/events.html)
+Header
+   Page title + description. Event count badge. Search input.
+Filter Sidebar
+   Categories: checkboxes with event count per category.
+   Date range: native date inputs.
+   Status: radio group (All / Upcoming / Live / Past).
+   Seats: toggle 'Show available only'.
+   Reset Filters button.
+Event Grid
+   12-card grid, 3 columns desktop / 2 tablet / 1 mobile.
+   Skeleton loader (6 placeholder cards) while Firestore fetches.
+   Pagination: Previous / Page numbers / Next.
+8.3 Event Detail Page (/event-detail.html)
+Hero Banner
+   Full-width banner image, max-height 400 px, object-fit cover.
+Info Block
+   Title, organizer name + avatar, category badge.
+   Date/time with calendar icon.
+   Venue with location pin icon.
+   Seat availability progress bar (registered / total).
+   Countdown timer widget.
+   Registration deadline badge.
+Action Panel
+   Sticky right column (desktop) / bottom bar (mobile).
+   CTA: 'Register Now' → checks auth → opens confirmation modal.
+   'Add to Calendar' ghost button (generates .ics file download).
+   Share button (Web Share API with fallback copy-to-clipboard).
+Description Tab
+   Rich-text rendered description (sanitised innerHTML).
+Tags Row
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 20 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+   Clickable monochrome chip tags → filters events listing.
+Related Events
+   3-card row: same category, upcoming, ordered by date.
+8.4 Login / Register Page (/login.html)
+Layout
+   Two-panel: left decorative (animated monochrome pattern), right form.
+   Single-page toggle between Sign In and Sign Up (no page reload).
+Sign Up Form
+   Fields: Full Name, Email, Password, Confirm Password, Role radio.
+   Password strength meter (4 segments).
+   Terms & Privacy checkbox.
+   Submit → createUserWithEmailAndPassword → Firestore user doc → redirect.
+Sign In Form
+   Fields: Email, Password. 'Forgot password?' link.
+   Google sign-in button.
+   Remember Me checkbox (Firebase persistence LOCAL vs SESSION).
+8.5 User Dashboard (/dashboard.html)
+Tabs
+   Overview | My Events | Tickets | Recommendations | Notifications | Profile
+All requirements
+   See Section 7.6 for full feature spec.
+8.6 My Tickets Page (dashboard.html#tickets)
+Ticket Card
+   QR code thumbnail (64×64 px preview).
+   Event title, date, venue.
+   Status badge: Upcoming / Attended / Cancelled.
+   'View Full Ticket' → full-size modal with QR and event details.
+   'Download' → PNG export.
+8.7 Profile Page (dashboard.html#profile)
+Fields
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 21 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+   Avatar (initials, monochrome).
+   Display name (editable).
+   Email (read-only, from Firebase Auth).
+   Role badge.
+   Member since.
+   Interest tags (multi-select chip input): Tech, Cultural, Sports, Workshop, Seminar, Hackathon.
+   Save → updateProfile + Firestore patch.
+8.8 Admin Dashboard (/admin.html)
+Layout
+   Fixed sidebar + scrollable main content area.
+All requirements
+   See Section 7.7 for full feature spec.
+8.9 Create / Edit Event (admin.html#create)
+Form Fields
+   Title (required, max 80 chars).
+   Description (required, rich-text textarea, max 2000 chars).
+   Category (select from 6 options).
+   Banner Image (Firebase Storage upload, preview shown immediately, max 5 MB).
+   Date & Time (date + time inputs, must be future).
+   Venue (text input, max 120 chars).
+   Total Seats (number, min 1, max 5000).
+   Registration Deadline (date-time, must be before event date).
+   Tags (tag input: type + Enter, max 10 tags).
+   Status (Upcoming / Draft / Cancelled).
+   Organizer (auto-filled from auth; admin can override).
+Validation
+   All required fields highlighted on submit attempt.
+   Image MIME type validated client-side before upload.
+   Date logic: event date must be > now; deadline must be < event date.
+Submit Behaviour
+   Create: addDoc to events collection → toast success → navigate to event detail.
+   Edit: updateDoc → toast success → navigate to event detail.
+   Draft save: saves with status='draft'; not shown in public listing.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 22 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+8.10 Analytics Dashboard (admin.html#analytics)
+Charts
+   See Section 7.7 for chart specifications.
+Date Range Filter
+   Global date range selector applies to all charts simultaneously.
+Export
+   Export current chart data as CSV from each chart's action menu.
+8.11 QR Scanner Page (admin.html#scanner)
+Camera View
+   Full-width video stream, scanning crosshair overlay, animated corner brackets.
+Scan Result
+   Overlay panel slides up from bottom with ticket info and status.
+All requirements
+   See Section 7.4 for full QR system spec.
+8.12 About & Contact Pages
+About
+   Platform story, mission, team section (placeholder cards).
+   Technology stack showcase.
+   CTA: 'Get Started' → /login.html.
+Contact
+   Contact form: Name, Email, Subject, Message.
+   Form submission: writes to Firestore contactMessages collection.
+   Success toast; form reset.
+   Institutional address and email display.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 23 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+9
+Firebase Architecture
+9.1 Firestore Schema
+Collection: users
+Field
+Type
+Description
+uid
+string
+Firebase Auth UID (document ID)
+name
+string
+Display name
+email
+string
+Institutional email
+role
+string
+'student' | 'organizer' | 'admin'
+interests
+array
+e.g. ['tech', 'hackathon']
+registeredEvents
+array
+Array of eventId strings
+disabled
+boolean
+Account soft-disable flag
+createdAt
+timestamp
+Account creation time
+Collection: events
+Field
+Type
+Description
+title
+string
+Event name
+description
+string
+Rich-text body
+category
+string
+'Tech' | 'Cultural' | 'Sports' | 'Workshop' | 'Seminar' | 'Hackathon'
+bannerUrl
+string
+Firebase Storage download URL
+organizerId
+string
+UID of creator
+organizerName
+string
+Denormalized for display
+date
+timestamp
+Event start datetime
+endDate
+timestamp
+Event end datetime
+venue
+string
+Location name
+totalSeats
+number
+Capacity
+seatsAvailable
+number
+Decremented on registration
+registrationDeadline
+timestamp
+Cut-off datetime
+registrationCount
+number
+Incremented on registration
+tags
+array
+String tags
+status
+string
+'upcoming' | 'live' | 'past' | 'draft' | 'cancelled' | 'deleted'
+trendingScore
+number
+Computed client-side, stored for caching
+createdAt
+timestamp
+Document creation time
+Collection: registrations
+Field
+Type
+Description
+ticketId
+string
+UUID v4 (document ID)
+userId
+string
+Firebase Auth UID
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 24 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+eventId
+string
+Event document ID
+userName
+string
+Denormalized
+eventTitle
+string
+Denormalized
+eventDate
+timestamp
+Denormalized
+venue
+string
+Denormalized
+qrPayload
+string
+JSON-encoded {ticketId, userId, eventId}
+status
+string
+'active' | 'cancelled' | 'attended'
+registeredAt
+timestamp
+Registration datetime
+Collection: attendance
+Field
+Type
+Description
+ticketId
+string
+Matching registrations.ticketId
+userId
+string
+Attendee UID
+eventId
+string
+Event reference
+scannedAt
+timestamp
+Scan datetime
+scannedBy
+string
+Organizer/admin UID
+Collection: notifications
+Field
+Type
+Description
+userId
+string
+Recipient UID
+type
+string
+'seats_filling' | 'deadline_soon' | 'live_now' | 'new_event'
+message
+string
+Human-readable notification text
+eventId
+string
+Related event (nullable)
+read
+boolean
+Read state
+createdAt
+timestamp
+Notification creation time
+9.2 Firestore Security Rules (Outline)
+   users: read → owner or admin; write → owner (limited fields) or admin.
+   events: read → all authenticated; create → organizer or admin; update/delete → owner organizer or
+admin.
+   registrations: read → owner student or admin; create → authenticated student; update/delete →
+owner or admin.
+   attendance: read → organizer of event or admin; create → organizer or admin; no delete.
+   notifications: read/update → owner; create → admin (server-triggered only); no delete.
+   All rules require request.auth != null (no anonymous access).
+   Disabled users: all write rules include !resource.data.disabled check on users/{uid}.
+9.3 Firebase Storage
+   Bucket path: /event-banners/{eventId}/{filename}
+   Allowed MIME types: image/jpeg, image/png, image/webp.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 25 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+   Max file size enforced via Storage Rules: request.resource.size < 5 * 1024 * 1024.
+   After upload: getDownloadURL() → stored in events document bannerUrl field.
+   Old banner deletion: on event update, delete previous object before uploading new one.
+9.4 Firebase Hosting
+   Deploy target: Firebase Hosting with CDN distribution.
+   firebase.json rewrites: all paths → /index.html for SPA-style navigation fallback.
+   Custom 404.html page (monochrome, branded).
+   Cache-Control headers: static assets → max-age=31536000; HTML → no-cache.
+   HTTPS enforced by default on Firebase Hosting.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 26 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+10
+File & Code Structure
+project-root/
+■■■ index.html ← Home page ■■■ events.html ← Events listing ■■■ event-detail.html ← Single
+event view ■■■ login.html ← Auth page ■■■ dashboard.html ← Student dashboard (hash routing)
+■■■ admin.html ← Admin panel (hash routing) ■■■ about.html ← About page ■■■ contact.html ←
+Contact page ■■■ 404.html ← Custom error page ■ ■■■ css/ ■ ■■■ style.css ← Global styles,
+design tokens ■ ■■■ dashboard.css ← Student dashboard styles ■ ■■■ admin.css ← Admin panel
+styles ■ ■■■ animations.css ← All keyframes & transition helpers ■ ■■■ responsive.css ←
+Media queries ■ ■■■ js/ ■ ■■■ firebase.js ← Firebase init, exports db/auth/storage ■ ■■■
+auth.js ← Auth flows, role detection, guards ■ ■■■ app.js ← Global utilities, toast, modal,
+theme ■ ■■■ events.js ← Event CRUD, search, filter, sort ■ ■■■ registration.js ← Register,
+cancel, ticket generation ■ ■■■ qr.js ← QR generation (qrcode.js) & scanning (jsQR) ■ ■■■
+dashboard.js ← Student dashboard logic ■ ■■■ admin.js ← Admin panel logic, user management ■
+■■■ analytics.js ← Chart.js setup and data binding ■ ■■■ ai.js ← Recommendation engine,
+trending, notifications ■ ■■■ theme.js ← Dark/light toggle, localStorage sync ■ ■■■ assets/
+■ ■■■ images/ ← Static images and placeholder banners ■ ■■■ icons/ ← SVG icons and favicon
+■ ■■■ fonts/ ← Self-hosted fonts (optional) ■ ■■■ firebase.json ← Hosting + Firestore rules
+config
+Module Responsibilities
+Module
+Responsibility
+firebase.js
+Single source of truth for Firebase SDK init. All other modules import from here.
+auth.js
+Wraps Firebase Auth calls. Exports signIn, signUp, signOut, getCurrentUser, onRoleChange.
+app.js
+Toast queue, modal manager, loading overlay, global event bus, utility functions.
+events.js
+Firestore CRUD for events collection. Fetches, filters, sorts, paginates.
+registration.js
+Atomic registration transaction, cancellation, ticket data generation.
+qr.js
+Generates QR canvas via qrcode.js; decodes camera frames via jsQR.
+dashboard.js
+Binds Firestore listeners to student dashboard UI sections.
+admin.js
+Admin sidebar routing, event table CRUD, user management, CSV export.
+analytics.js
+Queries Firestore for aggregated data; builds and updates Chart.js instances.
+ai.js
+Scoring algorithms for recommendations and trending; notification trigger logic.
+theme.js
+Reads/writes localStorage theme key; toggles data-theme attribute on <html>.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 27 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+11
+Third-Party Libraries
+Library
+Version
+CDN Source
+Purpose
+Firebase SDK
+10.x
+gstatic.com
+Auth, Firestore, Storage, Hosting
+Chart.js
+4.x
+cdnjs
+Analytics charts
+QRCode.js
+1.x
+cdnjs / jsdelivr
+Client-side QR code generation
+jsQR
+1.4.0
+cdnjs
+Camera-based QR code decoding
+AOS
+2.3.x
+cdnjs
+Scroll-reveal animations
+SweetAlert2
+11.x
+cdnjs
+Premium modal dialogs
+Font Awesome
+6.x
+cdnjs
+Icon library
+Google Fonts
+—
+fonts.googleapis.com
+Inter, Manrope, Poppins typefaces
+Confetti.js
+—
+cdn.jsdelivr.net
+Registration success animation
+All libraries are loaded via CDN with integrity hashes (SRI) and async/defer attributes where appropriate to
+minimise render-blocking. A bundled offline fallback is optional for production hardening.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 28 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+12
+Non-Functional Requirements
+12.1 Performance
+   Lighthouse Performance Score ≥ 85 on desktop, ≥ 75 on mobile (3G throttle).
+   First Contentful Paint < 1.5 s on broadband.
+   Time to Interactive < 3.5 s on broadband.
+   Images: lazy-loaded with loading='lazy'; served in WebP where possible.
+   Firestore reads: use composite indexes; limit queries to minimum required documents.
+   No synchronous localStorage reads on critical render path.
+   Chart.js canvases rendered only when the analytics tab is active.
+12.2 Accessibility
+   WCAG 2.1 Level AA as target.
+   All interactive elements reachable via keyboard; focus rings visible (2px white/black offset).
+   ARIA labels on icon-only buttons and form inputs.
+   Color contrast ratio ≥ 4.5:1 for body text; ≥ 3:1 for large text.
+   Modal focus trap while open; focus returns to trigger on close.
+   AOS animations: respects prefers-reduced-motion media query (animations disabled).
+   Alt text on all meaningful images; decorative images aria-hidden='true'.
+12.3 Security
+   All Firestore operations protected by Security Rules (see Section 9.2).
+   Client-side role checks are UX convenience only; server Rules are the authoritative gate.
+   Input sanitisation: all user-generated content passed through DOMPurify before innerHTML insertion.
+   Firebase App Check (optional v2 hardening): prevents API abuse from non-app clients.
+   CSP header (via firebase.json): restricts script sources to self + trusted CDN domains.
+   HTTPS enforced; no HTTP fallback.
+   No API keys stored in JavaScript beyond Firebase config (which is safe to expose client-side by
+design).
+12.4 Responsiveness
+   Mobile first CSS: base styles target 320 px; larger breakpoints layered with min-width media queries.
+   Breakpoints: 320 px (mobile), 768 px (tablet), 1024 px (desktop), 1440 px (wide).
+   Navbar: hamburger menu on < 768 px; full link row on ≥ 768 px.
+   Event grid: 1 col (mobile) → 2 col (tablet) → 3 col (desktop) → 4 col (1440+).
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 29 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+   Admin sidebar: collapses to bottom tab bar on mobile.
+   Touch targets minimum 44×44 px (Apple HIG).
+   Horizontal scroll where needed (cards strip) rather than truncation.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 30 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+13
+Acceptance Criteria & Testing
+Feature
+Acceptance Criterion
+Test Type
+User Registration
+User can create account; Firestore doc created; redirected to dashboard.
+Manual / E2E
+Google OAuth
+Google sign-in completes; user doc upserted; role-based redirect works.
+Manual
+Event Creation
+Organizer submits form; event appears in public listing; banner visible.
+Manual / E2E
+Event Registration
+Student registers; seatsAvailable decrements; ticket generated with valid QR.
+Manual / Unit
+QR Scanning
+Valid ticket → green; used ticket → amber; invalid → red. Attendance doc created.
+Manual
+Search & Filter
+Filtering by category + date + status returns correct subset of events.
+Manual / Unit
+Recommendations
+For You section shows events matching user interests; excludes already-registered.
+Unit
+Trending
+Top 3 trending events receive badge; ordering matches scoring algorithm.
+Unit
+Dark/Light Theme
+Toggle switches all CSS vars; preference persists across page reloads.
+Manual
+Responsiveness
+All pages render correctly at 375 px, 768 px, 1280 px viewports.
+Cross-browser
+Analytics Charts
+All 6 charts render with correct data; monochrome palette applied.
+Manual
+CSV Export
+Admin exports attendees; CSV contains correct fields and data.
+Manual
+Accessibility
+Keyboard navigation complete; no WCAG AA violations on axe-core scan.
+Automated
+Performance
+Lighthouse ≥ 85 Performance on desktop build.
+Automated
+Security Rules
+Unauthenticated user cannot write to any Firestore collection (Firebase Emulator test).
+Unit
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 31 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+14
+Milestones & Delivery Plan
+Phase
+Milestone
+Deliverables
+Duration
+Phase 1
+Foundation
+Project scaffold, Firebase project setup, design token CSS, navbar, footer, dark/light theme.
+Week 1
+Phase 2
+Auth & Public Pages
+Login/Register flows, home page (hero + sections), events listing with search/filter, event detail page.
+Week 2
+Phase 3
+Core Features
+Registration + QR ticket system, user dashboard (all tabs), profile page, notifications.
+Week 3
+Phase 4
+Admin Suite
+Admin dashboard, create/edit event, QR scanner, user management, CSV export.
+Week 4
+Phase 5
+AI Features & Analytics
+Recommendation engine, trending algorithm, smart notifications, all 6 Chart.js charts.
+Week 5
+Phase 6
+Polish & QA
+Responsive tuning, animation refinement, accessibility audit, performance optimisation, Lighthouse pass.
+Week 6
+Phase 7
+Deployment
+Firebase Hosting deployment, Security Rules hardening, final demo data seeding, documentation.
+Week 7
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 32 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+15
+Risks & Mitigations
+Risk
+Likelihood
+Impact
+Mitigation
+Firestore daily read quota exceeded during peak event registration.
+Medium
+High
+Implement client-side caching (sessionStorage) for event list; reduce listener scope; upgrade Firebase plan if needed.
+Camera API unavailable on older iOS Safari for QR scanner.
+Low
+Medium
+Detect getUserMedia support; fallback to manual ticket ID entry input.
+Large banner images degrade performance on mobile.
+Medium
+Medium
+Validate max 5 MB client-side; serve resized versions via Firebase Extensions (Resize Images).
+Firestore Security Rules misconfiguration exposes data.
+Low
+High
+Use Firebase Local Emulator Suite for rule testing before deployment; peer review all rule changes.
+Client-side role check bypass (student accessing admin routes).
+Medium
+Medium
+Security Rules are the authoritative gate; UI redirect is UX convenience only.
+Cross-browser inconsistencies in CSS custom properties.
+Low
+Low
+Test on Chrome, Firefox, Safari, Edge; use @supports guards for experimental CSS.
+Scope creep adding React/framework dependencies.
+Medium
+Medium
+Strict constraint: no npm build step; all dependencies via CDN only. Document this in onboarding guide.
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 33 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform
+
+
+16
+Appendix
+A. Sample Firestore Seed Data
+Use the following JSON to seed demo data via Firebase CLI or a seed script:
+{ "events": [ { "title": "HackFest 2026", "category": "Hackathon", "description": "48-hour
+pan-college hackathon. Build anything.", "venue": "Main Auditorium, Block A", "date":
+"2026-02-15T09:00:00Z", "endDate": "2026-02-17T09:00:00Z", "totalSeats": 200,
+"seatsAvailable": 87, "registrationDeadline": "2026-02-10T23:59:00Z", "tags": ["coding",
+"teamwork", "prizes"], "status": "upcoming", "registrationCount": 113 }, { "title": "AI &
+Future Skills Workshop", "category": "Workshop", "description": "Hands-on ML workshop. Bring
+your laptop.", "venue": "CS Lab 3", "date": "2026-02-20T14:00:00Z", "totalSeats": 60,
+"seatsAvailable": 12, "registrationCount": 48, "status": "upcoming" } ] }
+B. Glossary
+Firestore — Google's NoSQL cloud database, part of Firebase.
+SPA — Single Page Application — hash routing within one HTML file.
+QR Payload — JSON string encoded as a QR code for ticket verification.
+Trending Score — Client-computed number: registrationCount × recencyMultiplier.
+Soft Delete — Setting status = 'deleted' rather than removing the document.
+SRI — Subresource Integrity — hash verification for CDN script tags.
+AOS — Animate On Scroll — CSS class-based scroll-reveal library.
+jsQR — Pure JavaScript QR code decoding library for camera input.
+CSP — Content Security Policy — HTTP header restricting script sources.
+ATR — Attendance Rate = attended / registered × 100%.
+ End of Document · SmartEvent AI PRD v1.0 · Generated May 17, 2026
+SmartEvent AI
+Product Requirements Document  ·  v1.0
+Page 34 of 34
+© 2025 SmartEvent AI  ·  Confidential & Proprietary
+College Event Management Platform

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact | SmartEvent AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body data-page="contact">
+    <header class="site-header compact"><a class="brand" href="index.html"><span>SmartEvent</span> AI</a><button class="nav-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button><nav class="site-nav"><a href="events.html">Events</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a><a class="auth-link" href="login.html">Login</a><button class="icon-button theme-toggle" aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button></nav></header>
+    <main class="page-shell two-col">
+      <section class="page-heading"><p class="eyebrow">CONTACT</p><h1>Bring SmartEvent AI to your campus.</h1><p>Send a note to Student Affairs operations. Demo submissions are stored locally; the Firebase write target is documented in the contact handler.</p><div class="contact-card"><p><i class="fa-solid fa-envelope"></i> studentaffairs@smartevent.edu</p><p><i class="fa-solid fa-location-dot"></i> North Campus Innovation Block</p></div></section>
+      <form class="panel-form" id="contact-form"><label>Name<input name="name" required></label><label>Email<input type="email" name="email" required></label><label>Subject<input name="subject" required></label><label>Message<textarea name="message" rows="6" required></textarea></label><button class="button primary" type="submit">Send Message</button></form>
+    </main>
+    <div id="toast-root" class="toast-root"></div>
+    <script type="module" src="js/firebase.js"></script><script src="js/data.js"></script><script src="js/app.js"></script>
+  </body>
+</html>

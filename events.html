@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Events | SmartEvent AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body data-page="events">
+    <header class="site-header compact">
+      <a class="brand" href="index.html"><span>SmartEvent</span> AI</a>
+      <button class="nav-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="events.html" aria-current="page">Events</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a class="auth-link" href="login.html">Login</a>
+        <button class="icon-button theme-toggle" aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+      </nav>
+    </header>
+    <main class="page-shell">
+      <section class="page-heading">
+        <p class="eyebrow">DISCOVERY</p>
+        <h1>Campus events</h1>
+        <p>Search, filter, and sort live campus programming with AI-inspired ranking signals.</p>
+      </section>
+      <section class="events-layout">
+        <aside class="filter-panel" aria-label="Event filters">
+          <label class="search-box"><i class="fa-solid fa-search"></i><input id="search-input" placeholder="Search title, venue, tags"></label>
+          <div>
+            <h3>Category</h3>
+            <div id="category-filters" class="stack"><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line long"></div></div>
+          </div>
+          <div class="split-inputs">
+            <label>Start<input id="start-date" type="date"></label>
+            <label>End<input id="end-date" type="date"></label>
+          </div>
+          <div>
+            <h3>Status</h3>
+            <div class="segmented">
+              <label><input type="radio" name="status" value="all" checked>All</label>
+              <label><input type="radio" name="status" value="upcoming">Upcoming</label>
+              <label><input type="radio" name="status" value="live">Live</label>
+              <label><input type="radio" name="status" value="past">Past</label>
+            </div>
+          </div>
+          <label class="toggle-line"><input id="available-only" type="checkbox"> Show available only</label>
+          <label>Sort<select id="sort-select"><option value="dateAsc">Date ascending</option><option value="dateDesc">Date descending</option><option value="popular">Popularity</option><option value="newest">Newest first</option></select></label>
+          <button class="button ghost full" id="reset-filters">Reset Filters</button>
+        </aside>
+        <div>
+          <div class="results-bar"><span id="event-count">0 events</span><div class="pagination" id="pagination-top"></div></div>
+          <div class="event-grid" id="events-grid">
+            <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+            <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+            <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+            <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+            <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+            <article class="skeleton-card" aria-hidden="true"><div class="skeleton-media"></div><div class="skeleton-body"><div class="skeleton-pill"></div><div class="skeleton-line long"></div><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></article>
+          </div>
+          <div class="pagination bottom" id="pagination"></div>
+        </div>
+      </section>
+    </main>
+    <div id="toast-root" class="toast-root"></div>
+    <script type="module" src="js/firebase.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/events.js"></script>
+  </body>
+</html>
