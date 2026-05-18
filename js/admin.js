@@ -93,7 +93,7 @@ function chartOptions(indexAxisY = false) {
 }
 function scanner() {
   const state = SmartStore.getState();
-  $("#admin-view").innerHTML = `<p class="eyebrow">QR SCANNER</p><h1>Attendance scanner</h1><div class="scanner-grid"><div class="camera-box"><video id="qr-video" autoplay playsinline style="width:100%;height:100%;object-fit:cover;"></video><canvas id="qr-canvas" style="display:none;"></canvas><div class="crosshair"></div></div><aside class="scan-panel"><label>Manual ticket ID<input id="ticket-id-input" placeholder="Paste ticket ID"></label><button class="button primary full" id="scan-ticket">Verify Ticket</button><h3>Recent scans</h3><div id="scan-log" class="stack"></div></aside></div>`;
+  $("#admin-view").innerHTML = `<p class="eyebrow">QR SCANNER</p><h1>Attendance scanner</h1><div class="scanner-grid"><div class="camera-box"><video id="qr-video" autoplay playsinline muted style="width:100%;height:100%;object-fit:cover;"></video><canvas id="qr-canvas" style="display:none;"></canvas><div class="crosshair"></div></div><aside class="scan-panel"><label>Manual ticket ID<input id="ticket-id-input" placeholder="Paste ticket ID"></label><button class="button primary full" id="scan-ticket">Verify Ticket</button><h3>Recent scans</h3><div id="scan-log" class="stack"></div></aside></div>`;
   
   function drawLog() {
     $("#scan-log").innerHTML = SmartStore.getState().attendance.slice(-20).reverse().map(row => `<article class="badge">${row.ticketId.slice(0, 8)} · ${fmtDate(row.scannedAt)}</article>`).join("") || `<p>No scans yet.</p>`;
@@ -127,7 +127,7 @@ function scanner() {
 
   navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(stream => {
     video.srcObject = stream;
-    video.play();
+    video.play().catch(err => console.error("Video play failed:", err));
     requestAnimationFrame(tick);
   }).catch(err => {
     console.error("Camera access denied or unavailable", err);
