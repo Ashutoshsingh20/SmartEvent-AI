@@ -79,6 +79,7 @@ function overview(user) {
     <section class="section"><div class="section-heading"><h2>Upcoming events</h2><a href="#tickets">View tickets</a></div><div class="horizontal-strip">${upcoming.map(reg => ticketCard(reg)).join("") || `<div class="empty-state">No upcoming registrations yet.</div>`}</div></section>
     <section><div class="section-heading"><h2>For You</h2><button class="button ghost" id="refresh-recs">Refresh Recommendations</button></div><div class="event-grid three">${recs.map(event => renderEventCard(event)).join("")}</div></section>`;
   $("#refresh-recs")?.addEventListener("click", () => { toast("Recommendations refreshed."); overview(user); });
+  hydrateTicketButtons();
 }
 function greeting() {
   const h = new Date().getHours();
